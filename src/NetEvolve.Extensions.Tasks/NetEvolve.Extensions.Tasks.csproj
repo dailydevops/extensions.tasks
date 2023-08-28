@@ -12,6 +12,5 @@
 
   <ItemGroup>
     <PackageReference Include="NetEvolve.Arguments" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Condition=" '$(TargetFramework)' == 'netstandard2.0' " />
   </ItemGroup>
 </Project>
