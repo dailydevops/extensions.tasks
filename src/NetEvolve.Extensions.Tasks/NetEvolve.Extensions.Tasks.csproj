@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+
+    <Title>$(MSBuildProjectName)</Title>
+    <Description>This library provides simple extension methods for `Task`, `Task&lt;T&gt;`, `ValueTask` and `ValueTask&lt;T&gt;`.</Description>
+    <PackageTags>extensions;task;</PackageTags>
+    <PackageProjectUrl>https://github.com/dailydevops/extensions.test</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dailydevops/extensions.test.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Arguments" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Condition=" '$(TargetFramework)' == 'netstandard2.0' " />
+  </ItemGroup>
+</Project>
