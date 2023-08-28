@@ -26,5 +26,5 @@ jobs:
       dotnet-logging: ${{ inputs.dotnet-logging | 'minimal' }}
       dotnet-version: |
         7.x
-      solution: ###SOLUTION###
+      solution: ./Extensions.Tasks.sln
     secrets: inherit
