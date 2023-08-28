@@ -1,0 +1,22 @@
+additional:
+  - "analyzer"
+  - "article.benchmarks"
+  - "describe"
+  - "develop"
+  - "extensions.test"
+  - "guard"
+  - "healthchecks"
+  - "http.correlation"
+  - "trydispose"
+
+files:
+  - "!**/*"
+  - ".csharpierignore"
+  - ".editorconfig"
+  - ".github/dependabot.yml"
+  - ".github/workflows/dependabot-merge.yml"
+  - ".github/workflows/update-license.yml"
+
+  # you probably want to exclude these files:
+  - "!.github/workflows/template-sync.yml"
+  - "!.github/template-sync.yml"

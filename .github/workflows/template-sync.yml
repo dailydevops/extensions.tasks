@@ -1,0 +1,23 @@
+name: Update template files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  template-sync:
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ahmadnassri/action-template-repository-sync@v2.4.6
+        with:
+          github-token: ${{ secrets.TEMPLATE_SYNC }}
+          dry-run: false
