@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.Extensions.Tasks.Tests.Unit;
 
 using NetEvolve.Extensions.XUnit;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
@@ -9,6 +10,19 @@ using Xunit;
 [ExcludeFromCodeCoverage]
 public class TaskExtensionsTests
 {
+    [Fact]
+    public async Task WithTimeoutAsync_ParamTaskNull_ArgumentNullException()
+    {
+        Task task = null!;
+
+        _ = await Assert
+            .ThrowsAsync<ArgumentNullException>(
+                "task",
+                async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false)
+            )
+            .ConfigureAwait(false);
+    }
+
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {

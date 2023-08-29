@@ -11,13 +11,13 @@ using Xunit;
 public class TaskOfTExtensionsTests
 {
     [Fact]
-    public async Task WithTimeoutAsync_ParamTodoNull_ArgumentNullException()
+    public async Task WithTimeoutAsync_ParamTaskNull_ArgumentNullException()
     {
         Task<bool> task = null!;
 
         _ = await Assert
             .ThrowsAsync<ArgumentNullException>(
-                "todo",
+                "task",
                 async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false)
             )
             .ConfigureAwait(false);

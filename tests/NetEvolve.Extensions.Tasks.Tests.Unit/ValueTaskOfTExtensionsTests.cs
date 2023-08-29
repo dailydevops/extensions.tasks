@@ -9,7 +9,6 @@ using Xunit;
 [ExcludeFromCodeCoverage]
 public class ValueTaskOfTExtensionsTests
 {
-
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
