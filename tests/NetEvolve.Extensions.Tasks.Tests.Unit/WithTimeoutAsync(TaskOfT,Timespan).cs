@@ -3,12 +3,13 @@
 using NetEvolve.Extensions.XUnit;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 [UnitTest]
 [ExcludeFromCodeCoverage]
-public class TaskOfTExtensionsTests
+public class TaskExtensionsTaskOfTTimespanTests
 {
     [Fact]
     public async Task WithTimeoutAsync_ParamTaskNull_ArgumentNullException()
@@ -18,7 +19,7 @@ public class TaskOfTExtensionsTests
         _ = await Assert
             .ThrowsAsync<ArgumentNullException>(
                 "task",
-                async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false)
+                async () => await task!.WithTimeoutAsync(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false)
             )
             .ConfigureAwait(false);
     }
@@ -26,10 +27,10 @@ public class TaskOfTExtensionsTests
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
-        var timeoutInMilliseconds = 75;
+        var timeout = TimeSpan.FromMilliseconds(75);
 
         var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
+            .WithTimeoutAsync(timeout)
             .ConfigureAwait(false);
         Assert.True(isValid);
         Assert.Equal(1, result);
@@ -44,12 +45,44 @@ public class TaskOfTExtensionsTests
     [Fact]
     public async Task WithTimeoutAsync_IsValidFalse_Expected()
     {
-        var timeoutInMilliseconds = 20;
+        var timeout = TimeSpan.FromMilliseconds(20);
 
         var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
+            .WithTimeoutAsync(timeout)
             .ConfigureAwait(false);
         Assert.False(isValid);
+        Assert.Equal(1, result);
+
+        static async Task<int> TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return 1;
+        }
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
+    {
+        var timeout = TimeSpan.FromMilliseconds(20);
+
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeout)
+            .ConfigureAwait(false);
+        Assert.True(isValid);
+        Assert.Equal(1, result);
+
+        static Task<int> TestMethod() => Task.FromResult(1);
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TimeoutInfinite_Expected()
+    {
+        var timeout = Timeout.InfiniteTimeSpan;
+
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeout)
+            .ConfigureAwait(false);
+        Assert.True(isValid);
         Assert.Equal(1, result);
 
         static async Task<int> TestMethod()

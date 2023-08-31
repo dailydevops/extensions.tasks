@@ -2,12 +2,13 @@
 
 using NetEvolve.Extensions.XUnit;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 [UnitTest]
 [ExcludeFromCodeCoverage]
-public class ValueTaskOfTExtensionsTests
+public class TaskExtensionsValueTaskOfTIntTests
 {
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
@@ -36,6 +37,38 @@ public class ValueTaskOfTExtensionsTests
             .WithTimeoutAsync(timeoutInMilliseconds)
             .ConfigureAwait(false);
         Assert.False(isValid);
+        Assert.Equal(1, result);
+
+        static async ValueTask<int> TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return 1;
+        }
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
+    {
+        var timeoutInMilliseconds = 20;
+
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
+        Assert.True(isValid);
+        Assert.Equal(1, result);
+
+        static ValueTask<int> TestMethod() => ValueTask.FromResult(1);
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TimeoutInfinite_Expected()
+    {
+        var timeoutInMilliseconds = Timeout.Infinite;
+
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
+        Assert.True(isValid);
         Assert.Equal(1, result);
 
         static async ValueTask<int> TestMethod()
