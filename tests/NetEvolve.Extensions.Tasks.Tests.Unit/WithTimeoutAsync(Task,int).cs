@@ -3,12 +3,13 @@
 using NetEvolve.Extensions.XUnit;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 [UnitTest]
 [ExcludeFromCodeCoverage]
-public class TaskExtensionsTests
+public class TaskExtensionsTaskIntTests
 {
     [Fact]
     public async Task WithTimeoutAsync_ParamTaskNull_ArgumentNullException()
@@ -49,6 +50,36 @@ public class TaskExtensionsTests
             .WithTimeoutAsync(timeoutInMilliseconds)
             .ConfigureAwait(false);
         Assert.False(isValid);
+
+        static async Task TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return;
+        }
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
+    {
+        var timeoutInMilliseconds = 75;
+
+        var isValid = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
+        Assert.True(isValid);
+
+        static Task TestMethod() => Task.CompletedTask;
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TimeoutInfinite_Expected()
+    {
+        var timeoutInMilliseconds = Timeout.Infinite;
+
+        var isValid = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
+        Assert.True(isValid);
 
         static async Task TestMethod()
         {
