@@ -16,9 +16,7 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(75);
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.True(isValid);
 
         static async ValueTask TestMethod()
@@ -33,9 +31,7 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(20);
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.False(isValid);
 
         static async ValueTask TestMethod()
@@ -50,9 +46,7 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(75);
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.True(isValid);
 
         static ValueTask TestMethod() => ValueTask.CompletedTask;
@@ -63,10 +57,27 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = Timeout.InfiniteTimeSpan;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.True(isValid);
+
+        static async ValueTask TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return;
+        }
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowArgumentOutOfRangeException()
+    {
+        var timeout = new TimeSpan(0, 0, 0, 0, -2);
+
+        _ = await Assert
+            .ThrowsAsync<ArgumentOutOfRangeException>(
+                "timeout",
+                async () => await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false)
+            )
+            .ConfigureAwait(false);
 
         static async ValueTask TestMethod()
         {
