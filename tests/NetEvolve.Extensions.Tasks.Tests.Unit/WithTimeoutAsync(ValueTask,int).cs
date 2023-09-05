@@ -76,6 +76,23 @@ public class TaskExtensionsValueTaskIntTests
     }
 
     [Fact]
+    public async Task WithTimeoutAsync_TimeoutZero_Expected()
+    {
+        var timeoutInMilliseconds = 0;
+
+        var isValid = await TestMethod()
+            .WithTimeoutAsync(timeoutInMilliseconds)
+            .ConfigureAwait(false);
+        Assert.False(isValid);
+
+        static async ValueTask TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return;
+        }
+    }
+
+    [Fact]
     public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowArgumentOutOfRangeException()
     {
         var timeoutInMilliseconds = -2;

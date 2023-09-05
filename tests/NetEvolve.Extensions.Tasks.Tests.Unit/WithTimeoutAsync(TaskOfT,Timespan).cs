@@ -88,6 +88,22 @@ public class TaskExtensionsTaskOfTTimespanTests
     }
 
     [Fact]
+    public async Task WithTimeoutAsync_TimeoutZero_Expected()
+    {
+        var timeout = TimeSpan.Zero;
+
+        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        Assert.False(isValid);
+        Assert.Equal(1, result);
+
+        static async Task<int> TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return 1;
+        }
+    }
+
+    [Fact]
     public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowsArgumentOutOfRangeException()
     {
         var timeout = new TimeSpan(0, 0, 0, 0, -2);
