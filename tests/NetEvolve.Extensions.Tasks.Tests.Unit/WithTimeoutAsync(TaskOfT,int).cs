@@ -91,4 +91,24 @@ public class TaskExtensionsTaskOfTIntTests
             return 1;
         }
     }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowsArgumentOutOfRangeException()
+    {
+        var timeoutInMilliseconds = -2;
+
+        _ = await Assert
+            .ThrowsAsync<ArgumentOutOfRangeException>(
+                "timeoutInMilliseconds",
+                async () =>
+                    await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false)
+            )
+            .ConfigureAwait(false);
+
+        static async Task<int> TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return 1;
+        }
+    }
 }

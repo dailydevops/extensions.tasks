@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.Extensions.Tasks;
 
+using NetEvolve.Arguments;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,15 +22,17 @@ public static partial class TaskExtensions
         CancellationToken cancellationToken = default
     )
     {
+        Argument.ThrowIfLessThan(timeoutInMilliseconds, Timeout.Infinite);
+
         if (task.IsCompleted)
         {
             return true;
         }
 
-        if (timeoutInMilliseconds == Timeout.Infinite)
+        if (timeoutInMilliseconds <= 0)
         {
             await task.ConfigureAwait(false);
-            return true;
+            return timeoutInMilliseconds == Timeout.Infinite;
         }
 
         var todoTask = task.AsTask();

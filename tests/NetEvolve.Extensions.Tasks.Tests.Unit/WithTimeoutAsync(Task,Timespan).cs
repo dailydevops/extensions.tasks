@@ -19,7 +19,10 @@ public class TaskExtensionsTaskTimespanTests
         _ = await Assert
             .ThrowsAsync<ArgumentNullException>(
                 "task",
-                async () => await task!.WithTimeoutAsync(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false)
+                async () =>
+                    await task!
+                        .WithTimeoutAsync(TimeSpan.FromMilliseconds(100))
+                        .ConfigureAwait(false)
             )
             .ConfigureAwait(false);
     }
@@ -29,9 +32,7 @@ public class TaskExtensionsTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(75);
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.True(isValid);
 
         static async Task TestMethod()
@@ -46,9 +47,7 @@ public class TaskExtensionsTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(20);
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.False(isValid);
 
         static async Task TestMethod()
@@ -63,9 +62,7 @@ public class TaskExtensionsTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(100);
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.True(isValid);
 
         static Task TestMethod() => Task.CompletedTask;
@@ -76,10 +73,27 @@ public class TaskExtensionsTaskTimespanTests
     {
         var timeout = Timeout.InfiniteTimeSpan;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeout)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
         Assert.True(isValid);
+
+        static async Task TestMethod()
+        {
+            await Task.Delay(75).ConfigureAwait(false);
+            return;
+        }
+    }
+
+    [Fact]
+    public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowArgumentOutOfRangeException()
+    {
+        var timeout = new TimeSpan(0, 0, 0, 0, -2);
+
+        _ = await Assert
+            .ThrowsAsync<ArgumentOutOfRangeException>(
+                "timeout",
+                async () => await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false)
+            )
+            .ConfigureAwait(false);
 
         static async Task TestMethod()
         {
