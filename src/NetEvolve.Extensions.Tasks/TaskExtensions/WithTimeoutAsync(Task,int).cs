@@ -32,15 +32,15 @@ public static partial class TaskExtensions
         Argument.ThrowIfNull(task);
         Argument.ThrowIfLessThan(timeoutInMilliseconds, Timeout.Infinite);
 
-        if (task.IsCompleted)
-        {
-            return true;
-        }
-
         if (timeoutInMilliseconds <= 0)
         {
             await task.ConfigureAwait(false);
             return timeoutInMilliseconds == Timeout.Infinite;
+        }
+
+        if (task.IsCompleted)
+        {
+            return true;
         }
 
         var winner = await Task.WhenAny(task, Task.Delay(timeoutInMilliseconds, cancellationToken))

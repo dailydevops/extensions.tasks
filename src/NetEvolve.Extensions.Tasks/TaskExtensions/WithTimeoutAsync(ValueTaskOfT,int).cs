@@ -24,14 +24,14 @@ public static partial class TaskExtensions
     {
         Argument.ThrowIfLessThan(timeoutInMilliseconds, Timeout.Infinite);
 
-        if (task.IsCompleted)
-        {
-            return (true, await task.ConfigureAwait(false));
-        }
-
         if (timeoutInMilliseconds <= 0)
         {
             return (timeoutInMilliseconds == Timeout.Infinite, await task.ConfigureAwait(false));
+        }
+
+        if (task.IsCompleted)
+        {
+            return (true, await task.ConfigureAwait(false));
         }
 
         var todoTask = task.AsTask();
