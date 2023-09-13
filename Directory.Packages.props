@@ -15,7 +15,7 @@
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.8" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.1.74" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageVersion Include="Verify.Xunit" Version="21.1.1" />
+    <PackageVersion Include="Verify.Xunit" Version="21.1.3" />
     <PackageVersion Include="xunit" Version="2.5.0" />
     <PackageVersion Include="xunit.core" Version="2.5.0" />
     <PackageVersion Include="xunit.runner.console" Version="2.5.0" />
