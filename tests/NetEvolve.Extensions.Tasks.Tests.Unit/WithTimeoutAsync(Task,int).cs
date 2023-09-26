@@ -16,12 +16,10 @@ public class TaskExtensionsTaskIntTests
     {
         Task task = null!;
 
-        _ = await Assert
-            .ThrowsAsync<ArgumentNullException>(
-                "task",
-                async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false)
-            )
-            .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentNullException>(
+            "task",
+            async () => await task!.WithTimeoutAsync(100)
+        );
     }
 
     [Fact]
@@ -29,16 +27,10 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = 75;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
 
-        static async Task TestMethod()
-        {
-            await Task.Delay(20).ConfigureAwait(false);
-            return;
-        }
+        static Task TestMethod() => Task.Delay(20);
     }
 
     [Fact]
@@ -46,16 +38,10 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = 20;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
 
-        static async Task TestMethod()
-        {
-            await Task.Delay(75).ConfigureAwait(false);
-            return;
-        }
+        static Task TestMethod() => Task.Delay(75);
     }
 
     [Fact]
@@ -63,9 +49,7 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = 75;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
 
         static Task TestMethod() => Task.CompletedTask;
@@ -76,16 +60,10 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = Timeout.Infinite;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
 
-        static async Task TestMethod()
-        {
-            await Task.Delay(75).ConfigureAwait(false);
-            return;
-        }
+        static Task TestMethod() => Task.Delay(75);
     }
 
     [Fact]
@@ -93,16 +71,10 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = 0;
 
-        var isValid = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
 
-        static async Task TestMethod()
-        {
-            await Task.Delay(75).ConfigureAwait(false);
-            return;
-        }
+        static Task TestMethod() => Task.Delay(75);
     }
 
     [Fact]
@@ -110,18 +82,11 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = -2;
 
-        _ = await Assert
-            .ThrowsAsync<ArgumentOutOfRangeException>(
-                "timeoutInMilliseconds",
-                async () =>
-                    await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false)
-            )
-            .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+            "timeoutInMilliseconds",
+            async () => await TestMethod().WithTimeoutAsync(timeoutInMilliseconds)
+        );
 
-        static async Task TestMethod()
-        {
-            await Task.Delay(75).ConfigureAwait(false);
-            return;
-        }
+        static Task TestMethod() => Task.Delay(75);
     }
 }

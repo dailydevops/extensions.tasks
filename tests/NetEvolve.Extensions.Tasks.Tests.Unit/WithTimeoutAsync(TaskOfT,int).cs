@@ -16,12 +16,10 @@ public class TaskExtensionsTaskOfTIntTests
     {
         Task<bool> task = null!;
 
-        _ = await Assert
-            .ThrowsAsync<ArgumentNullException>(
-                "task",
-                async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false)
-            )
-            .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentNullException>(
+            "task",
+            async () => await task!.WithTimeoutAsync(100)
+        );
     }
 
     [Fact]
@@ -29,15 +27,13 @@ public class TaskExtensionsTaskOfTIntTests
     {
         var timeoutInMilliseconds = 75;
 
-        var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
         Assert.Equal(1, result);
 
         static async Task<int> TestMethod()
         {
-            await Task.Delay(20).ConfigureAwait(false);
+            await Task.Delay(20);
             return 1;
         }
     }
@@ -47,15 +43,13 @@ public class TaskExtensionsTaskOfTIntTests
     {
         var timeoutInMilliseconds = 20;
 
-        var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
         Assert.Equal(1, result);
 
         static async Task<int> TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return 1;
         }
     }
@@ -65,9 +59,7 @@ public class TaskExtensionsTaskOfTIntTests
     {
         var timeoutInMilliseconds = 20;
 
-        var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
         Assert.Equal(1, result);
 
@@ -79,15 +71,13 @@ public class TaskExtensionsTaskOfTIntTests
     {
         var timeoutInMilliseconds = Timeout.Infinite;
 
-        var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
         Assert.Equal(1, result);
 
         static async Task<int> TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return 1;
         }
     }
@@ -97,15 +87,13 @@ public class TaskExtensionsTaskOfTIntTests
     {
         var timeoutInMilliseconds = 0;
 
-        var (isValid, result) = await TestMethod()
-            .WithTimeoutAsync(timeoutInMilliseconds)
-            .ConfigureAwait(false);
+        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
         Assert.Equal(1, result);
 
         static async Task<int> TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return 1;
         }
     }
@@ -115,17 +103,14 @@ public class TaskExtensionsTaskOfTIntTests
     {
         var timeoutInMilliseconds = -2;
 
-        _ = await Assert
-            .ThrowsAsync<ArgumentOutOfRangeException>(
-                "timeoutInMilliseconds",
-                async () =>
-                    await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false)
-            )
-            .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+            "timeoutInMilliseconds",
+            async () => await TestMethod().WithTimeoutAsync(timeoutInMilliseconds)
+        );
 
         static async Task<int> TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return 1;
         }
     }

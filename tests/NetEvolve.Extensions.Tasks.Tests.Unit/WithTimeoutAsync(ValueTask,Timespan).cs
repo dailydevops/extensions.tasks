@@ -16,12 +16,12 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(75);
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.True(isValid);
 
         static async ValueTask TestMethod()
         {
-            await Task.Delay(20).ConfigureAwait(false);
+            await Task.Delay(20);
             return;
         }
     }
@@ -31,12 +31,12 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(20);
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.False(isValid);
 
         static async ValueTask TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return;
         }
     }
@@ -46,7 +46,7 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.FromMilliseconds(75);
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.True(isValid);
 
         static ValueTask TestMethod() => ValueTask.CompletedTask;
@@ -57,12 +57,12 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = Timeout.InfiniteTimeSpan;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.True(isValid);
 
         static async ValueTask TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return;
         }
     }
@@ -72,12 +72,12 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = TimeSpan.Zero;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.False(isValid);
 
         static async ValueTask TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return;
         }
     }
@@ -87,16 +87,14 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = new TimeSpan(0, 0, 0, 0, -2);
 
-        _ = await Assert
-            .ThrowsAsync<ArgumentOutOfRangeException>(
-                "timeout",
-                async () => await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false)
-            )
-            .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+            "timeout",
+            async () => await TestMethod().WithTimeoutAsync(timeout)
+        );
 
         static async ValueTask TestMethod()
         {
-            await Task.Delay(75).ConfigureAwait(false);
+            await Task.Delay(75);
             return;
         }
     }
