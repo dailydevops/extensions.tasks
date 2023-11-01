@@ -16,10 +16,9 @@ public class TaskExtensionsTaskOfTTimespanTests
     {
         Task<bool> task = null!;
 
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
-            "task",
-            async () => await task!.WithTimeoutAsync(TimeSpan.FromMilliseconds(100))
-        );
+        Func<Task> testCode = async () =>
+            await task!.WithTimeoutAsync(TimeSpan.FromMilliseconds(100));
+        _ = await Assert.ThrowsAsync<ArgumentNullException>("task", testCode);
     }
 
     [Fact]
@@ -103,10 +102,8 @@ public class TaskExtensionsTaskOfTTimespanTests
     {
         var timeout = new TimeSpan(0, 0, 0, 0, -2);
 
-        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            "timeout",
-            async () => await TestMethod().WithTimeoutAsync(timeout)
-        );
+        Func<Task> testCode = async () => await TestMethod().WithTimeoutAsync(timeout);
+        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeout", testCode);
 
         static async Task<int> TestMethod()
         {

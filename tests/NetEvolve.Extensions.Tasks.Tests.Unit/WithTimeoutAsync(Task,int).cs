@@ -16,10 +16,8 @@ public class TaskExtensionsTaskIntTests
     {
         Task task = null!;
 
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
-            "task",
-            async () => await task!.WithTimeoutAsync(100)
-        );
+        Func<Task> testCode = async () => await task!.WithTimeoutAsync(100);
+        _ = await Assert.ThrowsAsync<ArgumentNullException>("task", testCode);
     }
 
     [Fact]
@@ -82,9 +80,11 @@ public class TaskExtensionsTaskIntTests
     {
         var timeoutInMilliseconds = -2;
 
+        Func<Task> testCode = async () =>
+            await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
             "timeoutInMilliseconds",
-            async () => await TestMethod().WithTimeoutAsync(timeoutInMilliseconds)
+            testCode
         );
 
         static Task TestMethod() => Task.Delay(75);
