@@ -1,10 +1,10 @@
 ﻿namespace NetEvolve.Extensions.Tasks.Tests.Unit;
 
-using NetEvolve.Extensions.XUnit;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using NetEvolve.Extensions.XUnit;
 using Xunit;
 
 [UnitTest]

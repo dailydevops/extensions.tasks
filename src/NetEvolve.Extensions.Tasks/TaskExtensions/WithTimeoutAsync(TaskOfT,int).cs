@@ -1,9 +1,9 @@
 ﻿namespace NetEvolve.Extensions.Tasks;
 
-using NetEvolve.Arguments;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using NetEvolve.Arguments;
 
 /// <summary>
 /// Extension methods for <see cref="Task"/>, <see cref="Task{TResult}" />, <see cref="ValueTask"/> and <see cref="ValueTask{TResult}"/>.
