@@ -87,7 +87,7 @@ public class TaskExtensionsValueTaskTimespanTests
     {
         var timeout = new TimeSpan(0, 0, 0, 0, -2);
 
-        Func<Task> testCode = async () => await TestMethod().WithTimeoutAsync(timeout);
+        var testCode = async () => await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeout", testCode);
 
         static async ValueTask TestMethod()
