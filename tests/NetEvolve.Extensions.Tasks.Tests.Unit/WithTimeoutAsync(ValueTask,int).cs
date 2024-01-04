@@ -19,11 +19,7 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(20);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(20);
     }
 
     [Fact]
@@ -34,11 +30,7 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 
     [Fact]
@@ -60,11 +52,7 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 
     [Fact]
@@ -75,11 +63,7 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 
     [Fact]
@@ -93,10 +77,6 @@ public class TaskExtensionsValueTaskIntTests
             testCode
         );
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 }

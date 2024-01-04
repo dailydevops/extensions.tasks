@@ -19,11 +19,7 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.True(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(20);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(20);
     }
 
     [Fact]
@@ -34,11 +30,7 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.False(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 
     [Fact]
@@ -60,11 +52,7 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.True(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 
     [Fact]
@@ -75,11 +63,7 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         Assert.False(isValid);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 
     [Fact]
@@ -90,10 +74,6 @@ public class TaskExtensionsValueTaskTimespanTests
         var testCode = async () => await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeout", testCode);
 
-        static async ValueTask TestMethod()
-        {
-            await Task.Delay(75);
-            return;
-        }
+        static async ValueTask TestMethod() => await Task.Delay(75);
     }
 }
