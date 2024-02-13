@@ -16,7 +16,7 @@
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.0.88" />
-    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.2.0" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="1.2.1" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageVersion Include="Verify.Xunit" Version="23.1.0" />
     <PackageVersion Include="xunit" Version="2.6.6" />
