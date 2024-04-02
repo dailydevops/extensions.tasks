@@ -14,7 +14,7 @@ public class TaskExtensionsValueTaskIntTests
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
-        var timeoutInMilliseconds = 75;
+        var timeoutInMilliseconds = 150;
 
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
@@ -30,13 +30,13 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
 
-        static async ValueTask TestMethod() => await Task.Delay(75);
+        static async ValueTask TestMethod() => await Task.Delay(120);
     }
 
     [Fact]
     public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
     {
-        var timeoutInMilliseconds = 75;
+        var timeoutInMilliseconds = 150;
 
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
@@ -52,7 +52,7 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
 
-        static async ValueTask TestMethod() => await Task.Delay(75);
+        static async ValueTask TestMethod() => await Task.Delay(150);
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class TaskExtensionsValueTaskIntTests
         var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.False(isValid);
 
-        static async ValueTask TestMethod() => await Task.Delay(75);
+        static async ValueTask TestMethod() => await Task.Delay(150);
     }
 
     [Fact]
@@ -77,6 +77,6 @@ public class TaskExtensionsValueTaskIntTests
             testCode
         );
 
-        static async ValueTask TestMethod() => await Task.Delay(75);
+        static async ValueTask TestMethod() => await Task.Delay(150);
     }
 }

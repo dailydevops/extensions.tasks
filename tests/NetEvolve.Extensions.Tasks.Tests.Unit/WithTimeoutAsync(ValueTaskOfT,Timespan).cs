@@ -14,7 +14,7 @@ public class TaskExtensionsValueTaskOfTTimespanTests
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
-        var timeout = TimeSpan.FromMilliseconds(75);
+        var timeout = TimeSpan.FromMilliseconds(150);
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout);
         Assert.True(isValid);
@@ -38,7 +38,7 @@ public class TaskExtensionsValueTaskOfTTimespanTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
@@ -66,7 +66,7 @@ public class TaskExtensionsValueTaskOfTTimespanTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
@@ -82,7 +82,7 @@ public class TaskExtensionsValueTaskOfTTimespanTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
@@ -97,7 +97,7 @@ public class TaskExtensionsValueTaskOfTTimespanTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }

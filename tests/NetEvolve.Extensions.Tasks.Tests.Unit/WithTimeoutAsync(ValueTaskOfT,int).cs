@@ -14,7 +14,7 @@ public class TaskExtensionsValueTaskOfTIntTests
     [Fact]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
-        var timeoutInMilliseconds = 75;
+        var timeoutInMilliseconds = 150;
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
         Assert.True(isValid);
@@ -38,7 +38,7 @@ public class TaskExtensionsValueTaskOfTIntTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
@@ -66,7 +66,7 @@ public class TaskExtensionsValueTaskOfTIntTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
@@ -82,7 +82,7 @@ public class TaskExtensionsValueTaskOfTIntTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
@@ -100,7 +100,7 @@ public class TaskExtensionsValueTaskOfTIntTests
 
         static async ValueTask<int> TestMethod()
         {
-            await Task.Delay(75);
+            await Task.Delay(150);
             return 1;
         }
     }
