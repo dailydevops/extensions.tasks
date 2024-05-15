@@ -6,8 +6,8 @@
     <Title>$(MSBuildProjectName)</Title>
     <Description>This library provides simple extension methods for `Task`, `Task&lt;T&gt;`, `ValueTask` and `ValueTask&lt;T&gt;`.</Description>
     <PackageTags>extensions;task;</PackageTags>
-    <PackageProjectUrl>https://github.com/dailydevops/extensions.test</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dailydevops/extensions.test.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dailydevops/extensions.tasks</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dailydevops/extensions.tasks.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
