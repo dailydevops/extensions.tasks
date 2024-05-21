@@ -8,6 +8,8 @@
     <PackageTags>extensions;task;</PackageTags>
     <PackageProjectUrl>https://github.com/dailydevops/extensions.tasks</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dailydevops/extensions.tasks.git</RepositoryUrl>
+
+    <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
 
   <ItemGroup>
