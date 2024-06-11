@@ -9,6 +9,8 @@
     <PackageProjectUrl>https://github.com/dailydevops/extensions.tasks</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dailydevops/extensions.tasks.git</RepositoryUrl>
 
+    <PackageReleaseNotes>$(PackageProjectUrl)/releases</PackageReleaseNotes>
+
     <CopyrightYearStart>2023</CopyrightYearStart>
   </PropertyGroup>
 
