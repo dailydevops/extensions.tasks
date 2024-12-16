@@ -25,7 +25,7 @@ jobs:
     with:
       enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}
-      dotnet-quality: preview
+      dotnet-quality: ga
       dotnet-version: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
       solution: ./Extensions.Tasks.sln
     secrets: inherit
