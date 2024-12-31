@@ -13,8 +13,8 @@
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19" />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.3" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.3" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageVersion Include="NetEvolve.Arguments" Version="1.3.0" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.5.0" />
