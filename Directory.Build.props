@@ -1,8 +1,6 @@
 <Project>
-
   <PropertyGroup>
     <!-- Workaround, until https://github.com/GitTools/GitVersion/pull/4206 is released -->
     <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
   </PropertyGroup>
-
 </Project>
