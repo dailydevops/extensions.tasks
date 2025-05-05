@@ -37,8 +37,7 @@ public static partial class TaskExtensions
         }
 
         var todoTask = task.AsTask();
-        var winner = await Task.WhenAny(todoTask, Task.Delay(timeout, cancellationToken))
-            .ConfigureAwait(false);
+        var winner = await Task.WhenAny(todoTask, Task.Delay(timeout, cancellationToken)).ConfigureAwait(false);
         await winner.ConfigureAwait(false);
         return winner == todoTask;
     }
