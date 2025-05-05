@@ -93,10 +93,7 @@ public class TaskExtensionsValueTaskOfTIntTests
         var timeoutInMilliseconds = -2;
 
         var testCode = async () => await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
-        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            "timeoutInMilliseconds",
-            testCode
-        );
+        _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeoutInMilliseconds", testCode);
 
         static async ValueTask<int> TestMethod()
         {

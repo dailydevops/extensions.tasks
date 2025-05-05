@@ -18,11 +18,7 @@ public static partial class TaskExtensions
     /// <param name="timeout">The time span to wait before the result is <see langword="false"/>.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>true, if <paramref name="task"/> was successful.</returns>
-    [SuppressMessage(
-        "Usage",
-        "VSTHRD003:Avoid awaiting foreign Tasks",
-        Justification = "As designed."
-    )]
+    [SuppressMessage("Usage", "VSTHRD003:Avoid awaiting foreign Tasks", Justification = "As designed.")]
     public static async Task<bool> WithTimeoutAsync(
         this Task task,
         TimeSpan timeout,
@@ -43,8 +39,7 @@ public static partial class TaskExtensions
             return true;
         }
 
-        var winner = await Task.WhenAny(task, Task.Delay(timeout, cancellationToken))
-            .ConfigureAwait(false);
+        var winner = await Task.WhenAny(task, Task.Delay(timeout, cancellationToken)).ConfigureAwait(false);
         await winner.ConfigureAwait(false);
         return winner == task;
     }
