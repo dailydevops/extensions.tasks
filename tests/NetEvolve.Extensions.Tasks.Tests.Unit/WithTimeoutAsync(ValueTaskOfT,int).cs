@@ -4,21 +4,20 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using NetEvolve.Extensions.XUnit;
-using Xunit;
+using NetEvolve.Extensions.TUnit;
 
 [UnitTest]
 [ExcludeFromCodeCoverage]
 public class TaskExtensionsValueTaskOfTIntTests
 {
-    [Fact]
+    [Test]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
         var timeoutInMilliseconds = 150;
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
-        Assert.True(isValid);
-        Assert.Equal(1, result);
+        _ = await Assert.That(isValid).IsTrue();
+        _ = await Assert.That(result).IsEqualTo(1);
 
         static async ValueTask<int> TestMethod()
         {
@@ -27,14 +26,14 @@ public class TaskExtensionsValueTaskOfTIntTests
         }
     }
 
-    [Fact]
+    [Test]
     public async Task WithTimeoutAsync_IsValidFalse_Expected()
     {
         var timeoutInMilliseconds = 20;
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
-        Assert.False(isValid);
-        Assert.Equal(1, result);
+        _ = await Assert.That(isValid).IsFalse();
+        _ = await Assert.That(result).IsEqualTo(1);
 
         static async ValueTask<int> TestMethod()
         {
@@ -43,26 +42,26 @@ public class TaskExtensionsValueTaskOfTIntTests
         }
     }
 
-    [Fact]
+    [Test]
     public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
     {
         var timeoutInMilliseconds = 20;
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
-        Assert.True(isValid);
-        Assert.Equal(1, result);
+        _ = await Assert.That(isValid).IsTrue();
+        _ = await Assert.That(result).IsEqualTo(1);
 
         static ValueTask<int> TestMethod() => ValueTask.FromResult(1);
     }
 
-    [Fact]
+    [Test]
     public async Task WithTimeoutAsync_TimeoutInfinite_Expected()
     {
         var timeoutInMilliseconds = Timeout.Infinite;
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
-        Assert.True(isValid);
-        Assert.Equal(1, result);
+        _ = await Assert.That(isValid).IsTrue();
+        _ = await Assert.That(result).IsEqualTo(1);
 
         static async ValueTask<int> TestMethod()
         {
@@ -71,14 +70,14 @@ public class TaskExtensionsValueTaskOfTIntTests
         }
     }
 
-    [Fact]
+    [Test]
     public async Task WithTimeoutAsync_TimeoutZero_Expected()
     {
         var timeoutInMilliseconds = 0;
 
         var (isValid, result) = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
-        Assert.False(isValid);
-        Assert.Equal(1, result);
+        _ = await Assert.That(isValid).IsFalse();
+        _ = await Assert.That(result).IsEqualTo(1);
 
         static async ValueTask<int> TestMethod()
         {
@@ -87,7 +86,7 @@ public class TaskExtensionsValueTaskOfTIntTests
         }
     }
 
-    [Fact]
+    [Test]
     public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowArgumentOutOfRangeException()
     {
         var timeoutInMilliseconds = -2;
