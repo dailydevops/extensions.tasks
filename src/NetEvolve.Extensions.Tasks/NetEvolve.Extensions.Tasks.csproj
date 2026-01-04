@@ -8,6 +8,7 @@
     <RepositoryUrl>https://github.com/dailydevops/extensions.tasks.git</RepositoryUrl>
     <PackageReleaseNotes>$(PackageProjectUrl)/releases</PackageReleaseNotes>
     <CopyrightYearStart>2023</CopyrightYearStart>
+    <NoWarn>$(NoWarn);VSTHRD003</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEvolve.Arguments" />

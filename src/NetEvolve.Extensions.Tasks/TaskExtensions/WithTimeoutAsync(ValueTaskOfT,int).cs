@@ -22,7 +22,7 @@ public static partial class TaskExtensions
         CancellationToken cancellationToken = default
     )
     {
-        Argument.ThrowIfLessThan(timeoutInMilliseconds, Timeout.Infinite);
+        ArgumentOutOfRangeException.ThrowIfLessThan(timeoutInMilliseconds, Timeout.Infinite);
 
         if (timeoutInMilliseconds <= 0)
         {
