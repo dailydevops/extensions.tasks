@@ -12,4 +12,4 @@ using System.Threading.Tasks;
     Justification = "False positive"
 )]
 #endif
-public static partial class TaskExtensions { }
+public static partial class TaskExtensions;

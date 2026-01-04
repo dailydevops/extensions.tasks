@@ -1,10 +1,8 @@
 ﻿namespace NetEvolve.Extensions.Tasks;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using NetEvolve.Arguments;
 
 /// <summary>
 /// Extension methods for <see cref="Task"/>, <see cref="Task{TResult}" />, <see cref="ValueTask"/> and <see cref="ValueTask{TResult}"/>.
@@ -18,15 +16,14 @@ public static partial class TaskExtensions
     /// <param name="timeout">The time span to wait before the result is <see langword="false"/>.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>true, if <paramref name="task"/> was successful.</returns>
-    [SuppressMessage("Usage", "VSTHRD003:Avoid awaiting foreign Tasks", Justification = "As designed.")]
     public static async Task<(bool isValid, T result)> WithTimeoutAsync<T>(
         this Task<T> task,
         TimeSpan timeout,
         CancellationToken cancellationToken = default
     )
     {
-        Argument.ThrowIfNull(task);
-        Argument.ThrowIfLessThan(timeout, Timeout.InfiniteTimeSpan);
+        ArgumentNullException.ThrowIfNull(task);
+        ArgumentOutOfRangeException.ThrowIfLessThan(timeout, Timeout.InfiniteTimeSpan);
 
         if (timeout <= TimeSpan.Zero)
         {

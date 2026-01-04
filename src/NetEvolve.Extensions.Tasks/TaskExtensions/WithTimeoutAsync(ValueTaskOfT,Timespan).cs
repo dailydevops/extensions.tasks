@@ -3,7 +3,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NetEvolve.Arguments;
 
 /// <summary>
 /// Extension methods for <see cref="Task"/>, <see cref="Task{TResult}" />, <see cref="ValueTask"/> and <see cref="ValueTask{TResult}"/>.
@@ -23,7 +22,7 @@ public static partial class TaskExtensions
         CancellationToken cancellationToken = default
     )
     {
-        Argument.ThrowIfLessThan(timeout, Timeout.InfiniteTimeSpan);
+        ArgumentOutOfRangeException.ThrowIfLessThan(timeout, Timeout.InfiniteTimeSpan);
 
         if (timeout <= TimeSpan.Zero)
         {
