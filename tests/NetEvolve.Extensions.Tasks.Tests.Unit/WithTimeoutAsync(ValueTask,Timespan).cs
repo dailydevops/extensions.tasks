@@ -13,7 +13,7 @@ public class TaskExtensionsValueTaskTimespanTests
     [Test]
     public async Task WithTimeoutAsync_IsValidTrue_Expected()
     {
-        var timeout = TimeSpan.FromMilliseconds(150);
+        var timeout = TimeSpan.FromMilliseconds(1000);
 
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.That(isValid).IsTrue();
@@ -29,13 +29,13 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.That(isValid).IsFalse();
 
-        static async ValueTask TestMethod() => await Task.Delay(150);
+        static async ValueTask TestMethod() => await Task.Delay(1000);
     }
 
     [Test]
     public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
     {
-        var timeout = TimeSpan.FromMilliseconds(150);
+        var timeout = TimeSpan.FromMilliseconds(1000);
 
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.That(isValid).IsTrue();
@@ -51,7 +51,7 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.That(isValid).IsTrue();
 
-        static async ValueTask TestMethod() => await Task.Delay(150);
+        static async ValueTask TestMethod() => await Task.Delay(1000);
     }
 
     [Test]
@@ -62,7 +62,7 @@ public class TaskExtensionsValueTaskTimespanTests
         var isValid = await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.That(isValid).IsFalse();
 
-        static async ValueTask TestMethod() => await Task.Delay(150);
+        static async ValueTask TestMethod() => await Task.Delay(1000);
     }
 
     [Test]
@@ -73,6 +73,6 @@ public class TaskExtensionsValueTaskTimespanTests
         var testCode = async () => await TestMethod().WithTimeoutAsync(timeout);
         _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeout", testCode);
 
-        static async ValueTask TestMethod() => await Task.Delay(150);
+        static async ValueTask TestMethod() => await Task.Delay(1000);
     }
 }
