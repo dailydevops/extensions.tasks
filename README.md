@@ -15,12 +15,73 @@ dotnet add package NetEvolve.Extensions.Tasks
 
 ## 🎯 Features
 
+- **WhenAll for ValueTask**: Aggregate multiple `ValueTask` or `ValueTask<T>` operations similar to `Task.WhenAll`
 - **Timeout Support**: Execute async operations with configurable timeout handling
-- **Multi-Framework Support**: Compatible with .NET Standard 2.0, .NET 8.0, .NET 9.0, and .NET 10.0
+- **Multi-Framework Support**: Compatible with .NET Standard 2.0, .NET 6.0, .NET 7.0, .NET 8.0, .NET 9.0, and .NET 10.0
 - **Lightweight**: Minimal dependencies, focused on essential functionality
 - **Modern**: Supports both `Task` and `ValueTask` patterns
 
 ## 🚀 Usage
+
+### WhenAll (ValueTask)
+
+Aggregate multiple `ValueTask` operations, similar to `Task.WhenAll`. This is useful when you have multiple `ValueTask` instances that you want to await together.
+
+#### ValueTask with params array
+
+```csharp
+using NetEvolve.Extensions.Tasks;
+
+await ValueTask.WhenAll(
+    DoSomethingAsync(),
+    DoSomethingElseAsync(),
+    DoAnotherThingAsync()
+);
+
+Console.WriteLine("All operations completed");
+```
+
+#### ValueTask with IEnumerable
+
+```csharp
+using NetEvolve.Extensions.Tasks;
+
+var tasks = new List<ValueTask>
+{
+    ProcessItemAsync(1),
+    ProcessItemAsync(2),
+    ProcessItemAsync(3)
+};
+
+await ValueTask.WhenAll(tasks);
+```
+
+#### ValueTask\<T\> with results
+
+```csharp
+using NetEvolve.Extensions.Tasks;
+
+var results = await ValueTask<int>.WhenAll(
+    GetValueAsync(1),
+    GetValueAsync(2),
+    GetValueAsync(3)
+);
+
+// results is int[] { 1, 2, 3 } - results are returned in the same order as tasks
+foreach (var result in results)
+{
+    Console.WriteLine(result);
+}
+```
+
+#### ValueTask\<T\> with IEnumerable
+
+```csharp
+using NetEvolve.Extensions.Tasks;
+
+IEnumerable<ValueTask<string>> tasks = GetTasksAsync();
+string[] results = await ValueTask<string>.WhenAll(tasks);
+```
 
 ### WithTimeoutAsync
 
@@ -127,6 +188,78 @@ All extension methods are available for:
 - `ValueTask`
 - `ValueTask<T>`
 
+### WhenAll
+
+Creates a task that completes when all of the supplied `ValueTask` instances have completed.
+
+#### WhenAll(IEnumerable\<ValueTask\>)
+
+Waits for all tasks in an enumerable collection to complete.
+
+**Parameters:**
+- `tasks` (IEnumerable\<ValueTask\>): The tasks to wait on for completion.
+
+**Returns:** `ValueTask` - A task that represents the completion of all supplied tasks.
+
+**Exceptions:**
+- `ArgumentNullException`: If the tasks argument is null.
+
+#### WhenAll(params ValueTask[])
+
+Waits for all tasks in an array to complete.
+
+**Parameters:**
+- `tasks` (ValueTask[]): The tasks to wait on for completion.
+
+**Returns:** `ValueTask` - A task that represents the completion of all supplied tasks.
+
+**Exceptions:**
+- `ArgumentNullException`: If the tasks argument is null.
+
+#### WhenAll(ReadOnlySpan\<ValueTask\>) (.NET 9+)
+
+Waits for all tasks in a span to complete.
+
+**Parameters:**
+- `tasks` (ReadOnlySpan\<ValueTask\>): The tasks to wait on for completion.
+
+**Returns:** `ValueTask` - A task that represents the completion of all supplied tasks.
+
+#### WhenAll\<TResult\>(IEnumerable\<ValueTask\<TResult\>\>)
+
+Waits for all tasks in an enumerable collection to complete and returns their results.
+
+**Parameters:**
+- `tasks` (IEnumerable\<ValueTask\<TResult\>\>): The tasks to wait on for completion.
+
+**Returns:** `ValueTask<TResult[]>` - A task containing an array of all task results in the same order as the input tasks.
+
+**Exceptions:**
+- `ArgumentNullException`: If the tasks argument is null.
+
+#### WhenAll\<TResult\>(params ValueTask\<TResult\>[])
+
+Waits for all tasks in an array to complete and returns their results.
+
+**Parameters:**
+- `tasks` (ValueTask\<TResult\>[]): The tasks to wait on for completion.
+
+**Returns:** `ValueTask<TResult[]>` - A task containing an array of all task results in the same order as the input tasks.
+
+**Exceptions:**
+- `ArgumentNullException`: If the tasks argument is null.
+
+#### WhenAll\<TResult\>(ReadOnlySpan\<ValueTask\<TResult\>\>) (.NET 9+)
+
+Waits for all tasks in a span to complete and returns their results.
+
+**Parameters:**
+- `tasks` (ReadOnlySpan\<ValueTask\<TResult\>\>): The tasks to wait on for completion.
+
+**Returns:** `ValueTask<TResult[]>` - A task containing an array of all task results in the same order as the input tasks.
+
+### WithTimeoutAsync
+
 #### WithTimeoutAsync(int, CancellationToken)
 
 Waits for a task to complete within the specified timeout in milliseconds.
@@ -158,6 +291,14 @@ Waits for a task to complete within the specified timeout.
 - `OperationCanceledException`: If the operation is cancelled via the cancellation token.
 
 ## 🎓 Best Practices
+
+### WhenAll
+
+1. **Prefer WhenAll over sequential awaits**: When you have multiple independent `ValueTask` operations, use `WhenAll` to run them concurrently instead of awaiting them sequentially.
+2. **Result order is preserved**: The results array maintains the same order as the input tasks, regardless of completion order.
+3. **Handle exceptions**: If any task throws an exception, it will be propagated. Consider wrapping in try-catch if needed.
+
+### WithTimeoutAsync
 
 1. **Check the return value**: Always check if the operation completed successfully before accessing results.
 2. **Use TimeSpan for clarity**: Prefer `TimeSpan` overloads for better readability in production code.
