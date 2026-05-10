@@ -15,10 +15,10 @@ public class TaskExtensionsValueTaskIntTests
     {
         var timeoutInMilliseconds = 1000;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
         _ = await Assert.That(isValid).IsTrue();
 
-        static async ValueTask TestMethod() => await Task.Delay(20);
+        static async ValueTask TestMethod() => await Task.Delay(20).ConfigureAwait(false);
     }
 
     [Test]
@@ -26,10 +26,10 @@ public class TaskExtensionsValueTaskIntTests
     {
         var timeoutInMilliseconds = 20;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
         _ = await Assert.That(isValid).IsFalse();
 
-        static async ValueTask TestMethod() => await Task.Delay(120);
+        static async ValueTask TestMethod() => await Task.Delay(120).ConfigureAwait(false);
     }
 
     [Test]
@@ -37,7 +37,7 @@ public class TaskExtensionsValueTaskIntTests
     {
         var timeoutInMilliseconds = 1000;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
         _ = await Assert.That(isValid).IsTrue();
 
         static ValueTask TestMethod() => ValueTask.CompletedTask;
@@ -48,10 +48,10 @@ public class TaskExtensionsValueTaskIntTests
     {
         var timeoutInMilliseconds = Timeout.Infinite;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
         _ = await Assert.That(isValid).IsTrue();
 
-        static async ValueTask TestMethod() => await Task.Delay(1000);
+        static async ValueTask TestMethod() => await Task.Delay(1000).ConfigureAwait(false);
     }
 
     [Test]
@@ -59,10 +59,10 @@ public class TaskExtensionsValueTaskIntTests
     {
         var timeoutInMilliseconds = 0;
 
-        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
+        var isValid = await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
         _ = await Assert.That(isValid).IsFalse();
 
-        static async ValueTask TestMethod() => await Task.Delay(1000);
+        static async ValueTask TestMethod() => await Task.Delay(1000).ConfigureAwait(false);
     }
 
     [Test]
@@ -70,9 +70,9 @@ public class TaskExtensionsValueTaskIntTests
     {
         var timeoutInMilliseconds = -2;
 
-        var testCode = async () => await TestMethod().WithTimeoutAsync(timeoutInMilliseconds);
+        var testCode = async () => await TestMethod().WithTimeoutAsync(timeoutInMilliseconds).ConfigureAwait(false);
         _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeoutInMilliseconds", testCode);
 
-        static async ValueTask TestMethod() => await Task.Delay(1000);
+        static async ValueTask TestMethod() => await Task.Delay(1000).ConfigureAwait(false);
     }
 }
