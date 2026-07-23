@@ -15,7 +15,7 @@ public class TaskExtensionsTaskOfTTimespanTests
     {
         Task<bool> task = null!;
 
-        var testCode = async () => await task!.WithTimeoutAsync(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false);
+        var testCode = async () => await task.WithTimeoutAsync(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false);
         _ = await Assert.ThrowsAsync<ArgumentNullException>("task", testCode);
     }
 
