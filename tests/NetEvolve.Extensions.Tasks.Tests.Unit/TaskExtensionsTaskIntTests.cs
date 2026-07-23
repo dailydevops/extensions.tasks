@@ -15,7 +15,7 @@ public class TaskExtensionsTaskIntTests
     {
         Task task = null!;
 
-        var testCode = async () => await task!.WithTimeoutAsync(100).ConfigureAwait(false);
+        var testCode = async () => await task.WithTimeoutAsync(100).ConfigureAwait(false);
         _ = await Assert.ThrowsAsync<ArgumentNullException>("task", testCode);
     }
 
