@@ -20,43 +20,59 @@ public class TaskExtensionsTaskOfTTimespanTests
     }
 
     [Test]
-    public async Task WithTimeoutAsync_IsValidTrue_Expected()
+    public async Task WithTimeoutAsync_IsValidTrue_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var timeout = TimeSpan.FromMilliseconds(1000);
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod(cancellationToken)
+            .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         _ = await Assert.That(isValid).IsTrue();
         _ = await Assert.That(result).IsEqualTo(1);
 
-        static async Task<int> TestMethod()
+        static async Task<int> TestMethod(CancellationToken token = default)
         {
-            await Task.Delay(20).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+
+            await Task.Delay(20, cancellationToken: token).ConfigureAwait(false);
             return 1;
         }
     }
 
     [Test]
-    public async Task WithTimeoutAsync_IsValidFalse_Expected()
+    public async Task WithTimeoutAsync_IsValidFalse_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var timeout = TimeSpan.FromMilliseconds(20);
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod(cancellationToken)
+            .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         _ = await Assert.That(isValid).IsFalse();
         _ = await Assert.That(result).IsEqualTo(1);
 
-        static async Task<int> TestMethod()
+        static async Task<int> TestMethod(CancellationToken token = default)
         {
-            await Task.Delay(1000).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+
+            await Task.Delay(1000, cancellationToken: token).ConfigureAwait(false);
             return 1;
         }
     }
 
     [Test]
-    public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected()
+    public async Task WithTimeoutAsync_TaskAlreadyCompleted_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var timeout = TimeSpan.FromMilliseconds(20);
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod()
+            .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         _ = await Assert.That(isValid).IsTrue();
         _ = await Assert.That(result).IsEqualTo(1);
 
@@ -64,48 +80,69 @@ public class TaskExtensionsTaskOfTTimespanTests
     }
 
     [Test]
-    public async Task WithTimeoutAsync_TimeoutInfinite_Expected()
+    public async Task WithTimeoutAsync_TimeoutInfinite_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var timeout = Timeout.InfiniteTimeSpan;
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod(cancellationToken)
+            .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         _ = await Assert.That(isValid).IsTrue();
         _ = await Assert.That(result).IsEqualTo(1);
 
-        static async Task<int> TestMethod()
+        static async Task<int> TestMethod(CancellationToken token = default)
         {
-            await Task.Delay(1000).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+
+            await Task.Delay(1000, cancellationToken: token).ConfigureAwait(false);
             return 1;
         }
     }
 
     [Test]
-    public async Task WithTimeoutAsync_TimeoutZero_Expected()
+    public async Task WithTimeoutAsync_TimeoutZero_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var timeout = TimeSpan.Zero;
 
-        var (isValid, result) = await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var (isValid, result) = await TestMethod(cancellationToken)
+            .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         _ = await Assert.That(isValid).IsFalse();
         _ = await Assert.That(result).IsEqualTo(1);
 
-        static async Task<int> TestMethod()
+        static async Task<int> TestMethod(CancellationToken token = default)
         {
-            await Task.Delay(1000).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+
+            await Task.Delay(1000, cancellationToken: token).ConfigureAwait(false);
             return 1;
         }
     }
 
     [Test]
-    public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowsArgumentOutOfRangeException()
+    public async Task WithTimeoutAsync_TimeoutMinusTwo_ThrowsArgumentOutOfRangeException(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var timeout = new TimeSpan(0, 0, 0, 0, -2);
 
-        var testCode = async () => await TestMethod().WithTimeoutAsync(timeout).ConfigureAwait(false);
+        var testCode = async () =>
+            await TestMethod(cancellationToken)
+                .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         _ = await Assert.ThrowsAsync<ArgumentOutOfRangeException>("timeout", testCode);
 
-        static async Task<int> TestMethod()
+        static async Task<int> TestMethod(CancellationToken token = default)
         {
-            await Task.Delay(1000).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+
+            await Task.Delay(1000, cancellationToken: token).ConfigureAwait(false);
             return 1;
         }
     }
