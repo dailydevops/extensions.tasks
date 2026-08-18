@@ -23,6 +23,8 @@ public static partial class TaskExtensions
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(timeoutInMilliseconds, Timeout.Infinite);
 
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (timeoutInMilliseconds <= 0)
         {
             return (timeoutInMilliseconds == Timeout.Infinite, await task.ConfigureAwait(false));
