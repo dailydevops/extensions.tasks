@@ -58,6 +58,23 @@ public class TaskExtensionsValueTaskTimespanTests
     }
 
     [Test]
+    public async Task WithTimeoutAsync_TimeoutZeroTaskAlreadyCompleted_ReturnsFalse(
+        CancellationToken cancellationToken = default
+    )
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var timeout = TimeSpan.Zero;
+
+        var isValid = await TestMethod()
+            .WithTimeoutAsync(timeout, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+        _ = await Assert.That(isValid).IsFalse();
+
+        static ValueTask TestMethod() => ValueTask.CompletedTask;
+    }
+
+    [Test]
     public async Task WithTimeoutAsync_TimeoutInfinite_Expected(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
