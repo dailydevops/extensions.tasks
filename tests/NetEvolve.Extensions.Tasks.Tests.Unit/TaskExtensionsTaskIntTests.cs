@@ -127,6 +127,8 @@ public class TaskExtensionsTaskIntTests
 
         static async Task TestMethod(CancellationToken token = default)
         {
+            token.ThrowIfCancellationRequested();
+
             await Task.Delay(20, cancellationToken: token).ConfigureAwait(false);
             throw new InvalidOperationException();
         }
@@ -147,6 +149,8 @@ public class TaskExtensionsTaskIntTests
 
         static async Task TestMethod(CancellationToken token = default)
         {
+            token.ThrowIfCancellationRequested();
+
             await Task.Delay(20, cancellationToken: token).ConfigureAwait(false);
             throw new InvalidOperationException();
         }
