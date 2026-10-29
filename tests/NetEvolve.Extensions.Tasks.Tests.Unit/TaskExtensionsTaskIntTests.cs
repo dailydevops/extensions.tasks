@@ -111,4 +111,44 @@ public class TaskExtensionsTaskIntTests
 
         static Task TestMethod(CancellationToken token = default) => Task.Delay(1000, cancellationToken: token);
     }
+
+    [Test]
+    public async Task WithTimeoutAsync_TaskFaultsBeforeTimeout_ThrowsException(
+        CancellationToken cancellationToken = default
+    )
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var testCode = async () =>
+            await TestMethod(cancellationToken)
+                .WithTimeoutAsync(1000, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<InvalidOperationException>(testCode);
+
+        static async Task TestMethod(CancellationToken token = default)
+        {
+            await Task.Delay(20, cancellationToken: token).ConfigureAwait(false);
+            throw new InvalidOperationException();
+        }
+    }
+
+    [Test]
+    public async Task WithTimeoutAsync_TimeoutInfiniteTaskFaults_ThrowsException(
+        CancellationToken cancellationToken = default
+    )
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var testCode = async () =>
+            await TestMethod(cancellationToken)
+                .WithTimeoutAsync(Timeout.Infinite, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<InvalidOperationException>(testCode);
+
+        static async Task TestMethod(CancellationToken token = default)
+        {
+            await Task.Delay(20, cancellationToken: token).ConfigureAwait(false);
+            throw new InvalidOperationException();
+        }
+    }
 }
